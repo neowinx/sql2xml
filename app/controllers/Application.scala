@@ -13,7 +13,9 @@ object Application extends Controller {
     var xmlBody = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
     xmlBody += "<USERS>"
     DB.withConnection { implicit c =>
-      SQL(" SELECT id as toposte, email FROM User ")().map {
+      val consulta = SQL(" SELECT id as toposte, email FROM User ")()
+      println(consulta)
+      consulta foreach {
         row => {
           xmlBody += "<USER>"
           val rowMap = row.asMap
