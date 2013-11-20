@@ -11,18 +11,25 @@ object Application extends Controller {
 
   def index = Action { implicit request =>
     var xmlBody = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
+    xmlBody += "<USERS>"
     DB.withConnection { implicit c =>
       SQL(" SELECT id as toposte, email FROM User ")().map {
         row => {
+          xmlBody += "<USER>"
+          val rowMap = row.asMap
           row.metaData.ms map {
             i => {
-              xmlBody += "<" + i.column.alias.mkString + ">" + row.data.mkString + "</" + i.column.alias.mkString + ">"
+              val colAlias = i.column.alias.mkString
+              xmlBody += "<" + colAlias + ">" + rowMap(i.column.qualified) + "</" + colAlias + ">"
             }
           }
+          xmlBody += "</USER>"
         }
       }
+      xmlBody += "</USERS>"
     }
-    Ok(xmlBody)
+    Ok(scala.xml.XML.loadString(xmlBody))
+    //Ok(xmlBody)
   }
 
 }

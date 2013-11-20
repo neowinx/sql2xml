@@ -10,6 +10,8 @@ CREATE TABLE User (
 );
 
 INSERT INTO User (id,email,password,fullname,isAdmin) VALUES (1,'admin@test.com','password','Administrador',true);
+INSERT INTO User (id,email,password,fullname,isAdmin) VALUES (2,'popo@test.com','popo','Popo',true);
+INSERT INTO User (id,email,password,fullname,isAdmin) VALUES (3,'chichi@test.com','chichi','Chichi',true);
 
 # --- !Downs
 
